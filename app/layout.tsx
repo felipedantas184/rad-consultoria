@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: "https://radconsultoriaaeronautica.com.br",
+    url: "https://rad-aero.com.br/",
     title: "RAD Consultoria Aeronáutica | Especialistas em Regularização",
     description: "80+ projetos homologados com 100% aprovação ANAC",
     siteName: "RAD Consultoria Aeronáutica",
@@ -82,7 +82,7 @@ export default function RootLayout({
               "@type": "ProfessionalService",
               "name": "RAD Consultoria Aeronáutica",
               "description": "Especialistas em registro de aeródromos, helipontos e sistemas PAPI",
-              "url": "https://radconsultoriaaeronautica.com.br",
+              "url": "https://rad-aero.com.br/",
               "telephone": "+55-86-99981-1672",
               "email": "ricardo@tecdata.com.br",
               "address": {
