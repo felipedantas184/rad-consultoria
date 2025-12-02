@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RAD Consultoria Aeronáutica",
+    title: "RAD - Consultoria Aeronáutica",
     description: "Especialistas em registro de aeródromos e helipontos",
     images: ["/twitter-image.png"],
   },
