@@ -1430,7 +1430,7 @@ export default function RADLandingPage() {
 
       {/* WhatsApp Flutuante - Tamanho Otimizado */}
       <motion.a
-        href="https://wa.me/5568999811672"
+        href="https://wa.me/5586999811672"
         target="_blank"
         rel="noopener noreferrer"
         initial={{ scale: 0, opacity: 0 }}
