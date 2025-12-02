@@ -395,10 +395,10 @@ export default function RADLandingPage() {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
             >
-              <div className="w-6 h-6 flex flex-col justify-center items-center">
-                <span className={`w-5 h-0.5 bg-gray-700 transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1' : ''}`}></span>
-                <span className={`w-5 h-0.5 bg-gray-700 mt-1.5 transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
-                <span className={`w-5 h-0.5 bg-gray-700 mt-1.5 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+              <div className="w-6 h-6 relative flex flex-col justify-center items-center">
+                <span className={`absolute w-5 h-0.5 bg-gray-700 transition-all duration-300 ${isMenuOpen ? "rotate-45" : "-translate-y-1.5"}`}></span>
+                <span className={`absolute w-5 h-0.5 bg-gray-700 transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`}></span>
+                <span className={`absolute w-5 h-0.5 bg-gray-700 transition-all duration-300 ${isMenuOpen ? "-rotate-45" : "translate-y-1.5"}`}></span>
               </div>
             </button>
           </div>
@@ -517,7 +517,7 @@ export default function RADLandingPage() {
               {/* CTA Principal - Mobile Optimized */}
               <div className="mt-10 sm:mt-12">
                 <motion.a
-                  href="#quick-contact"
+                  href="#contact"
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   className="inline-flex items-center justify-center w-full sm:w-auto bg-gradient-to-r from-blue-700 to-blue-900 text-white px-6 sm:px-12 py-4 sm:py-6 rounded-xl sm:rounded-2xl hover:shadow-xl sm:hover:shadow-2xl transition-all shadow-lg hover:shadow-blue-900/30 font-bold text-base sm:text-lg gap-3 sm:gap-4 cursor-pointer group"
@@ -712,8 +712,12 @@ export default function RADLandingPage() {
               {/* Perfil */}
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8 mb-8 sm:mb-10">
                 <div className="relative mx-auto sm:mx-0">
-                  <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center">
-                    <Users className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-white" />
+                  <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                    <img
+                      src="/ricardo.png"
+                      alt="Ricardo Augusto Dantas"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="absolute -bottom-2 -right-2 bg-green-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-bold">
                     15+ anos
@@ -775,7 +779,7 @@ export default function RADLandingPage() {
                         <div className="inline-block bg-white/20 text-white px-2.5 py-1 rounded-full text-xs font-medium mb-1.5 sm:mb-2">
                           {caseItem.category}
                         </div>
-                        <h3 className="text-lg sm:text-xl font-bold text-white leading-tight">{caseItem.title}</h3>
+                        <h4 className="text-lg sm:text-xl font-bold text-white leading-tight">{caseItem.title}</h4>
                         <p className="text-blue-200 text-xs sm:text-sm">{caseItem.location} • {caseItem.code}</p>
                       </div>
                       {caseItem.highlight && (
@@ -1059,7 +1063,7 @@ export default function RADLandingPage() {
                     <div className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Consulta Gratuita</div>
                     <div className="text-gray-600 flex items-center justify-center sm:justify-start gap-1.5">
                       <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
-                      <span className="text-sm sm:text-base">Diagnóstico em 24h • Sem compromisso</span>
+                      <span className="text-sm sm:text-base">Diagnóstico em 24h</span>
                     </div>
                   </div>
                 </div>
@@ -1101,17 +1105,22 @@ export default function RADLandingPage() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold text-gray-900 mb-2">
+                        <label
+                          htmlFor="project-type"
+                          className="block text-sm font-semibold text-gray-900 mb-2"
+                        >
                           Tipo de Projeto *
                         </label>
                         <select
+                          id="project-type"
                           name="projectType"
                           required
                           value={formData.projectType}
                           onChange={handleInputChange}
                           className="w-full text-gray-900 px-3.5 py-3 sm:px-4 sm:py-3.5 rounded-lg sm:rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all bg-white text-sm sm:text-base"
+                          aria-label="Selecione o tipo de projeto"
                         >
-                          <option value="">Selecione...</option>
+                          <option value="">Selecione o tipo de projeto...</option>
                           <option value="aerodromo">Aeródromo / Pista</option>
                           <option value="heliponto">Heliponto</option>
                           <option value="papi">Sistema PAPI</option>
@@ -1153,14 +1162,19 @@ export default function RADLandingPage() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold text-gray-900 mb-2">
+                        <label
+                          htmlFor="project-urgency"
+                          className="block text-sm font-semibold text-gray-900 mb-2"
+                        >
                           Urgência do Projeto
                         </label>
                         <select
+                          id="project-urgency"
                           name="urgency"
                           className="w-full text-gray-900 px-3.5 py-3 sm:px-4 sm:py-3.5 rounded-lg sm:rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all bg-white text-sm sm:text-base"
+                          aria-label="Selecione a urgência do projeto"
                         >
-                          <option value="">Selecione...</option>
+                          <option value="">Selecione a urgência...</option>
                           <option value="imediato">Imediato (30-60 dias)</option>
                           <option value="planejamento">Planejamento (60-90 dias)</option>
                           <option value="futuro">Futuro (+90 dias)</option>
@@ -1174,12 +1188,16 @@ export default function RADLandingPage() {
                     <div className="flex items-start gap-3">
                       <div className="flex items-center h-5 sm:h-6 mt-0.5">
                         <input
+                          id="privacy-policy"
                           type="checkbox"
                           required
                           className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
                         />
                       </div>
-                      <label className="text-sm text-gray-700">
+                      <label
+                        htmlFor="privacy-policy"
+                        className="text-sm text-gray-700 cursor-pointer"
+                      >
                         Concordo em receber contato para consultoria gratuita e diagnóstico do projeto.
                         <span className="block text-gray-500 text-xs mt-1">
                           Seus dados estão protegidos. Não fazemos spam.
