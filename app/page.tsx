@@ -44,7 +44,7 @@ const CLIENT_SEGMENTS = [
     icon: Users,
     count: '45+',
     // Exemplos em Título (Title Case)
-    examples: ['Fazenda Canaã', 'Fazenda Santa Thereza', 'Agrícola Rizzi', 'Fazenda Vale Verde'],
+    examples: ['Canaã Executivo', 'Fazenda Santa Thereza', 'Agrícola Rizzi', 'Fazenda Vale Verde'],
     description: 'Infraestrutura aérea para gestão e escoamento da produção em grandes propriedades rurais.'
   },
   {
@@ -66,9 +66,9 @@ const CLIENT_SEGMENTS = [
   {
     name: 'Bases de Táxi Aéreo & Escolas',
     icon: Plane,
-    count: '5+',
+    count: '3+',
     // Exemplos em Título (Title Case)
-    examples: ['Aero Park', 'Canaã Executivo - 1600m', 'Aeroclube Campina Grande', 'Luiz Aragao'],
+    examples: ['Fly Village / Top Line', 'Fly Village / Ceará Táxi Aéreo', 'Fly Village / Poty Táxi Aéreo'],
     description: 'Certificação e homologação de bases operacionais para empresas de táxi aéreo e fretamento executivo.'
   },
   {
@@ -76,15 +76,15 @@ const CLIENT_SEGMENTS = [
     icon: Globe,
     count: '7+',
     // Exemplos em Título (Title Case)
-    examples: ['Mais De 15 Pistas De Aldeias Da Funai', 'Prefeitura Municipal De Arapongas (Papi)'],
+    examples: ['Cajazeiras-PB (SJZA)', 'Patos-PB (SNTS)', 'Arapongas (SSOG)'],
     description: 'Aeródromos de interesse público, incluindo infraestrutura para aldeias indígenas, prefeituras e serviços estaduais.'
   },
   {
     name: 'Aviação Executiva & Privada',
     icon: Users,
-    count: '17+',
+    count: '4+',
     // Exemplos em Título (Title Case)
-    examples: ['Americano Brito', 'Pontal', 'Jaime Fernandes', 'Nova Era'],
+    examples: ['Canaã Executivo (SD7E)', 'Premier Executivo', 'DDA Aviação (SDTA)'],
     description: 'Registro e manutenção de aeródromos exclusivos para uso privado e aeronaves executivas.'
   }
 ]
@@ -93,10 +93,10 @@ const CLIENT_SEGMENTS = [
 const services = [
   {
     icon: Building,
-    title: 'Registro Completo de Aeródromos',
-    description: 'Regularização ANAC para pistas particulares e públicas',
-    features: ['Projeto executivo completo', 'Licenciamento ambiental', 'Homologação DECEA', 'Vistoria final'],
-    time: '60-90 dias',
+    title: 'Homologação / Registro de Aeródromos',
+    description: 'Regularização ANAC / DECEA',
+    features: ['PBZPA - Plano Básico de Zona de Proteção de Aeródromos', 'Perfil Longitudinal' ,'Projeto Executivo', 'Projeto de Balizamento Noturno', 'Projeto de Sinalização Horizontal'],
+    time: '~180 dias',
     highlight: true,
     stats: '80+ projetos registrados'
   },
@@ -104,43 +104,19 @@ const services = [
     icon: Helicopter,
     title: 'Homologação de Helipontos',
     description: 'Para edifícios, hospitais e propriedades rurais - Normas 2024',
-    features: ['Análise estrutural detalhada', 'Projeto luminotécnico', 'Laudo de segurança', 'OPEA para edifícios'],
-    time: '30-60 dias',
+    features: ['PBZPH - Plano Básico de Zona de Proteção de Helipontos', 'Projeto Executivo', 'Projeto de Balizamento Noturno', 'Projeto de Sinalização Horizontal'],
+    time: '~180 dias',
     highlight: true,
-    stats: '80+ projetos registrados'
+    stats: '9+ projetos registrados'
   },
   {
     icon: Navigation,
-    title: 'Sistemas PAPI & Certificação',
+    title: 'Sistemas PAPI / APAPI',
     description: 'Instalação e certificação de sistemas de aproximação de precisão',
-    features: ['Certificação DECEA', 'Treinamento operacional', 'Manutenção preventiva', 'Calibração periódica'],
-    time: '45-60 dias',
-    stats: '10+ sistemas instalados'
+    features: ['Certificação ANAC / DECEA', 'Treinamento operacional', 'Calibração periódica'],
+    time: '~180 dias',
+    stats: '7+ sistemas instalados'
   },
-  {
-    icon: FileCheck,
-    title: 'Regularização ANAC Emergencial',
-    description: 'Processo acelerado para clientes com necessidade imediata',
-    features: ['Diagnóstico em 24h', 'Processo prioritário', 'Acompanhamento diário', 'Garantia de prazo'],
-    time: '30-45 dias',
-    stats: 'Prazo recorde: 30 dias'
-  },
-  {
-    icon: Shield,
-    title: 'Due Diligence Aeronáutica',
-    description: 'Auditoria para aquisições e due diligence regulatória',
-    features: ['Análise documental completa', 'Due diligence técnica', 'Relatório de conformidade', 'Gestão de passivos'],
-    time: '15-30 dias',
-    stats: 'Evite multas de R$ 500k+'
-  },
-  {
-    icon: ClipboardCheck,
-    title: 'Gestão de Conformidade Contínua',
-    description: 'Monitoramento para manter operação dentro das normas',
-    features: ['Auditorias periódicas', 'Atualização normativa', 'Suporte regulatório 24/7', 'Renovação de certificados'],
-    time: 'Contínuo',
-    stats: 'Zero autuações em clientes'
-  }
 ]
 
 // Processo baseado em casos reais
@@ -163,14 +139,14 @@ const processSteps = [
     step: '03',
     title: 'Tramitação e Homologação',
     description: 'Gerenciamos todo processo junto à ANAC, DECEA e órgãos ambientais.',
-    duration: '30-60 dias',
+    duration: '120-150 dias',
     deliverable: 'Certificado de homologação ANAC'
   },
   {
     step: '04',
     title: 'Suporte Pós-Homologação',
-    description: 'Acompanhamento contínuo por 12 meses para manter conformidade.',
-    duration: '12 meses',
+    description: 'Acompanhamento contínuo por 6 meses para manter conformidade.',
+    duration: '6 meses',
     deliverable: 'Certificado de conformidade contínua'
   }
 ]
@@ -179,14 +155,14 @@ const processSteps = [
 const caseStudies = [
   {
     category: 'AGRONEGÓCIO',
-    title: 'FAZENDA CANAÃ EXECUTIVO',
+    title: 'CANAÃ EXECUTIVO',
     // Cliente/Proprietário real da sua lista
     client: 'Deputado Júlio César Lima',
     location: 'Teresina, PI',
     scope: [
-      'Aeródromo de 1200m a 1600m para aeronaves executivas e agrícolas',
-      'Sistema PAPI homologado para aproximações noturnas (SD7E)',
-      'Registro ANAC para operação particular (SD7E)'
+      'Aeródromo de 1600m para aeronaves executivas',
+      'Sistema PAPI para aproximações noturnas',
+      'Projetos de PBZPA, Sinalização e Balizamento',
     ],
     // Suposições plausíveis
     result: 'Homologação e expansão para 1.600m',
@@ -197,21 +173,21 @@ const caseStudies = [
   },
   {
     category: 'CONDOMÍNIOS & HOTELARIA',
-    title: 'SOCÓ BEACH RESIDENCE',
+    title: 'FLY VILLAGE - Condomínio Aeronáutico',
     // Cliente/Proprietário real da sua lista
     client: 'Fabio Ribeiro (Residencial)',
-    location: 'Cajueiro da Praia / BG, PI',
+    location: 'Altos / PI',
     scope: [
-      'Heliponto em condomínio de luxo litorâneo (SII7)',
-      'Registro ANAC para operação privada (PH24)',
-      'Certificação para operar com helicópteros de médio porte'
+      'Aeródromo de 1200m para aeronaves executivas',
+      'Sistema PAPI para aproximações noturnas',
+      'Projetos de PBZPA, Sinalização e Balizamento',
     ],
     // Suposições plausíveis
-    result: 'Aprovado para operação ininterrupta (24/7) no litoral do Piauí',
+    result: 'Condôminos',
     investment: 'R$ 1.6M',
-    timeline: '2024',
+    timeline: '2016',
     highlight: true,
-    code: 'SII7'
+    code: 'SSPF'
   },
   {
     category: 'AGRONEGÓCIO',
@@ -253,7 +229,7 @@ const caseStudies = [
 
 // Prova Social - Clientes Reais (amostra da sua lista)
 const realClients = [
-  'FAZENDA CANAÃ EXECUTIVO - SD7E',
+  'CANAÃ Executivo EXECUTIVO - SD7E',
   'SOCÓ BEACH RESIDENCE - SII7',
   'FLY VILLAGE - SSPF',
   'PREMIER COND. AERONÁUTICO',
@@ -270,17 +246,12 @@ const realClients = [
 const faqs = [
   {
     question: 'Vocês trabalham com aeródromos para agronegócio?',
-    answer: 'Sim, somos especialistas! Já homologamos mais de 45 aeródromos para grandes produtores rurais, incluindo FAZENDA CANAÃ (1600m), FAZENDA SANTA THEREZA e AGRÍCOLA RIZZI. Otimizamos o processo para atender às necessidades do agronegócio.',
+    answer: 'Sim, somos especialistas! Já homologamos mais de 45 aeródromos para grandes produtores rurais, incluindo Fazenda Tiúba, Fazenda Progresso, Fazenda Ipê e Fazenda Canel. Otimizamos o processo para atender às necessidades do agronegócio.',
     category: 'Agronegócio'
   },
   {
-    question: 'Quanto tempo leva para regularizar um heliponto em edifício?',
-    answer: 'Para helipontos em edifícios (OPEA), o processo leva 30-60 dias. Já homologamos projetos como SOCÓ BEACH RESIDENCE e EDIFÍCIO ANTENÃO com prazo médio de 45 dias. Temos processo acelerado para urgências.',
-    category: 'Helipontos'
-  },
-  {
     question: 'Atendem em todo Brasil?',
-    answer: 'Atendemos em todos os estados. Já trabalhamos em MA, PI, CE, PA, MT, SP, PR, BA, TO, GO e outros. Para locais remotos (mineração, FUNAI), temos experiência específica.',
+    answer: 'Atendemos em todos os estados. Já trabalhamos em PI, MA, CE, PA, MT, MG, SP, PR, PB, BA, TO, GO e outros.',
     category: 'Cobertura'
   }
 ]
@@ -510,7 +481,7 @@ export default function RADLandingPage() {
 
               {/* Descrição - Texto ajustado */}
               <p className="mt-6 text-lg sm:text-xl text-gray-700 leading-relaxed">
-                Para <span className="font-semibold text-gray-900">Produtores Rurais, Construtoras, Empresas e Prefeituras</span> que
+                Para <span className="font-semibold text-gray-900">Produtores Rurais, Pessoas Físicas, Empresas e Prefeituras</span> que
                 precisam de conformidade total com ANAC e DECEA.
               </p>
 
@@ -564,7 +535,7 @@ export default function RADLandingPage() {
                       <Building className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white" />
                     </div>
                     <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-1 sm:mb-2 leading-tight">
-                      FAZENDA CANAÃ EXECUTIVO
+                      CANAÃ Executivo EXECUTIVO
                     </h3>
                     <p className="text-sm sm:text-base text-gray-700 mb-2">Aeródromo 1600m • PAPI Instalado</p>
                     <div className="inline-flex items-center gap-1.5 bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full text-xs sm:text-sm">
@@ -742,7 +713,7 @@ export default function RADLandingPage() {
               {/* Stats */}
               <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-10">
                 {[
-                  { value: '80+', label: 'Projetos homologados' },
+                  { value: '90+', label: 'Projetos homologados' },
                   { value: '14', label: 'Estados atendidos' },
                 ].map((stat, index) => (
                   <div key={index} className="bg-white/10 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center backdrop-blur-sm">
@@ -772,7 +743,7 @@ export default function RADLandingPage() {
               className="w-full mt-8 sm:mt-0"
             >
               <div className="space-y-4 sm:space-y-6">
-                {caseStudies.slice(0, 3).map((caseItem, index) => (
+                {caseStudies.slice(0, 2).map((caseItem, index) => (
                   <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/20">
                     <div className="flex justify-between items-start mb-3 sm:mb-4">
                       <div className="max-w-[70%]">
@@ -790,7 +761,7 @@ export default function RADLandingPage() {
                     </div>
 
                     <div className="space-y-2 sm:space-y-3 mb-3 sm:mb-4">
-                      {caseItem.scope.slice(0, 2).map((item, i) => (
+                      {caseItem.scope.slice(0, 3).map((item, i) => (
                         <div key={i} className="flex items-start gap-2 sm:gap-3">
                           <Check className="w-3 h-3 sm:w-4 sm:h-4 text-green-300 flex-shrink-0 mt-0.5" />
                           <span className="text-blue-100 text-xs sm:text-sm leading-tight">{item}</span>
@@ -897,7 +868,7 @@ export default function RADLandingPage() {
               Transparência no Processo
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 px-2 sm:px-0">
-              Metodologia própria que já homologou mais de 80 projetos
+              Metodologia própria que já homologou mais de 90 projetos
             </p>
           </motion.div>
 
@@ -1124,7 +1095,7 @@ export default function RADLandingPage() {
                           <option value="aerodromo">Aeródromo / Pista</option>
                           <option value="heliponto">Heliponto</option>
                           <option value="papi">Sistema PAPI</option>
-                          <option value="regularizacao">Regularização</option>
+                          <option value="sinalizacao">Sinalização Horizontal</option>
                         </select>
                       </div>
                     </div>
@@ -1271,7 +1242,7 @@ export default function RADLandingPage() {
                   </a>
 
                   <a
-                    href="mailto:ricardo@tecdata.com.br"
+                    href="mailto:rad.aeronautica@gmail.com"
                     className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 hover:bg-gray-100 rounded-lg sm:rounded-xl border border-gray-200 transition-colors group"
                   >
                     <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
@@ -1279,7 +1250,7 @@ export default function RADLandingPage() {
                     </div>
                     <div>
                       <div className="font-bold text-gray-900 text-sm sm:text-base">E-mail</div>
-                      <div className="text-xs sm:text-sm text-gray-600">ricardo@tecdata.com.br</div>
+                      <div className="text-xs sm:text-sm text-gray-600">rad.aeronautica@gmail.com</div>
                     </div>
                   </a>
                 </div>
@@ -1288,11 +1259,7 @@ export default function RADLandingPage() {
                 <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
                   <div className="flex items-center justify-between text-xs sm:text-sm">
                     <span className="text-gray-600">Atendimento:</span>
-                    <span className="font-bold text-gray-900">Seg-Sex, 8h-18h</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs sm:text-sm mt-1.5 sm:mt-2">
-                    <span className="text-gray-600">Plantão:</span>
-                    <span className="font-bold text-blue-700">24h para clientes</span>
+                    <span className="font-bold text-gray-900">Seg-Dom, 8h-20h</span>
                   </div>
                 </div>
               </div>
@@ -1397,14 +1364,10 @@ export default function RADLandingPage() {
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:ricardo@tecdata.com.br" className="flex items-center gap-3 hover:text-white transition-colors">
+                  <a href="mailto:rad.aeronautica@gmail.com" className="flex items-center gap-3 hover:text-white transition-colors">
                     <Mail size={18} />
-                    <span>ricardo@tecdata.com.br</span>
+                    <span>rad.aeronautica@gmail.com</span>
                   </a>
-                </li>
-                <li className="flex items-center gap-3">
-                  <MapPin size={18} />
-                  <span>Teresina - PI<br />Atendimento em todo Brasil</span>
                 </li>
               </ul>
             </div>
@@ -1414,9 +1377,8 @@ export default function RADLandingPage() {
               <ul className="space-y-3 text-gray-400">
                 <li><a href="#services" className="hover:text-white transition-colors">Registro de Aeródromos</a></li>
                 <li><a href="#services" className="hover:text-white transition-colors">Homologação de Helipontos</a></li>
-                <li><a href="#services" className="hover:text-white transition-colors">Sistemas PAPI & ILS</a></li>
-                <li><a href="#services" className="hover:text-white transition-colors">Regularização ANAC</a></li>
-                <li><a href="#services" className="hover:text-white transition-colors">Due Diligence</a></li>
+                <li><a href="#services" className="hover:text-white transition-colors">Sistemas PAPI & APAPI</a></li>
+                <li><a href="#services" className="hover:text-white transition-colors">Regularização ANAC / DECEA</a></li>
               </ul>
             </div>
 
