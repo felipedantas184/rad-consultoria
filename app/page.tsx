@@ -34,6 +34,7 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import Image from 'next/image'
+import { sendContactForm } from '@/lib/api'
 
 // ========== DADOS REAIS DA RAD ==========
 
@@ -95,7 +96,7 @@ const services = [
     icon: Building,
     title: 'Homologação / Registro de Aeródromos',
     description: 'Regularização ANAC / DECEA',
-    features: ['PBZPA - Plano Básico de Zona de Proteção de Aeródromos', 'Perfil Longitudinal' ,'Projeto Executivo', 'Projeto de Balizamento Noturno', 'Projeto de Sinalização Horizontal'],
+    features: ['PBZPA - Plano Básico de Zona de Proteção de Aeródromos', 'Perfil Longitudinal', 'Projeto Executivo', 'Projeto de Balizamento Noturno', 'Projeto de Sinalização Horizontal'],
     time: '~180 dias',
     highlight: true,
     stats: '80+ projetos registrados'
@@ -263,6 +264,46 @@ const trustSignals = [
   { text: 'Todo Brasil', icon: Globe, subtitle: 'Cobertura Nacional' }
 ]
 
+// Galeria de Imagens de Cases
+const galleryImages = [
+  {
+    name: 'Fly Village',
+    prefix: 'SSPF',
+    category: 'Condomínio Aeronáutico',
+    url: '/gallery/fly-village.jpeg'
+  },
+  {
+    name: 'Peito de Moça - Luis Correia',
+    prefix: 'SII7',
+    category: 'Heliponto Residencial',
+    url: '/gallery/peito-de-moca.jpeg'
+  },
+  {
+    name: 'Catuleve - Aquiraz',
+    prefix: 'SWXK',
+    category: 'Aeródromo Rural',
+    url: '/gallery/catuleve.jpeg'
+  },
+  {
+    name: 'DDA Aviação',
+    prefix: 'SDTA',
+    category: 'Aeródromo Executivo',
+    url: '/gallery/DDA-Aviacao.jpeg'
+  },
+  {
+    name: 'Aeroporto Regional de Cajazeiras',
+    prefix: 'SJHG',
+    category: 'Heliponto Hospitalar',
+    url: '/gallery/cajazeiras.jpeg'
+  },
+  {
+    name: 'Heliponto Nazareth Canion Lodge',
+    prefix: 'SIIC',
+    category: 'Heliponto Residencial',
+    url: '/gallery/nazareth-canion.jpeg'
+  }
+]
+
 // ========== COMPONENTE PRINCIPAL ==========
 
 export default function RADLandingPage() {
@@ -280,23 +321,92 @@ export default function RADLandingPage() {
 
   const handleQuickSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Dados otimizados para lead qualificado
+
+    console.log("📤 Iniciando envio do formulário...");
+    console.log("📝 Dados do formulário:", formData);
+
+    // Preparar dados para envio
     const leadData = {
       name: formData.name,
       phone: formData.phone,
+      email: formData.email,
       projectType: formData.projectType,
+      location: formData.location,
+      company: formData.company || '',
+      urgency: (document.getElementById('project-urgency') as HTMLSelectElement)?.value || '',
+      message: formData.message || '',
       timestamp: new Date().toISOString(),
-      source: 'Landing Page - CTA Principal'
+      source: 'Landing Page - Formulário Principal'
     }
 
-    console.log('Lead qualificado captado:', leadData)
+    console.log("📨 Dados a serem enviados:", leadData);
 
-    // Simulação de envio para CRM/WhatsApp
-    alert('✅ Consulta agendada! O Eng. Ricardo entrará em contato em até 24h.')
+    // Mostrar loading
+    const submitButton = e.currentTarget.querySelector('button[type="submit"]')
+    if (submitButton) {
+      submitButton.innerHTML = 'Enviando...'
+      submitButton.setAttribute('disabled', 'true')
+    }
 
-    // Reset do formulário
-    setFormData({ ...formData, name: '', phone: '', projectType: '' })
-    setFormStep(2)
+    try {
+      // Preparar dados para envio
+      const leadData = {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        projectType: formData.projectType,
+        location: formData.location,
+        company: formData.company || '',
+        urgency: (e.currentTarget as any).urgency?.value || '',
+        message: formData.message || '',
+        timestamp: new Date().toISOString(),
+        source: 'Landing Page - Formulário Principal'
+      }
+
+      // Enviar para a API
+      const response = await sendContactForm(leadData)
+
+      if (response.success) {
+        // Sucesso
+        alert('✅ Consulta enviada com sucesso! Você receberá um e-mail de confirmação em instantes. Entraremos em contato em até 24h.')
+
+        // Reset do formulário
+        setFormData({
+          name: '',
+          phone: '',
+          projectType: '',
+          email: '',
+          company: '',
+          location: '',
+          message: ''
+        })
+
+        // Reset do campo urgency
+        const urgencySelect = document.getElementById('project-urgency') as HTMLSelectElement
+        if (urgencySelect) urgencySelect.value = ''
+
+        setFormStep(2)
+      } else {
+        throw new Error(response.message || 'Erro ao enviar')
+      }
+
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error)
+      alert('❌ Ocorreu um erro ao enviar sua consulta. Por favor, tente novamente ou entre em contato diretamente pelo WhatsApp: (86) 99981-1672')
+
+    } finally {
+      // Restaurar botão
+      if (submitButton) {
+        submitButton.innerHTML = `
+        <div class="flex items-center justify-center gap-2 sm:gap-3">
+          <Calendar className="w-5 h-5 sm:w-6 sm:h-6" />
+          <span>Solicitar Consulta Gratuita</span>
+          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+        </div>
+      `
+        submitButton.removeAttribute('disabled')
+      }
+    }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -469,7 +579,7 @@ export default function RADLandingPage() {
               {/* Badge de Autoridade - Responsivo */}
               <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-800 to-blue-900 text-white px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold mb-6 sm:mb-8 shadow-lg border border-blue-700">
                 <Award className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="truncate">80+ Projetos Registrados</span>
+                <span className="truncate">90+ Projetos Registrados</span>
               </div>
 
               {/* Título - Otimizado para Mobile */}
@@ -515,62 +625,60 @@ export default function RADLandingPage() {
               </div>
             </motion.div>
 
-            {/* Imagem Hero - Mobile Optimized */}
+            {/* Imagem Hero - Responsiva e Equilibrada */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative w-full mb-10 lg:mb-0 order-2 lg:order-2"
+              className="relative w-full mb-10 lg:mb-0 order-2"
             >
-              <div className="relative rounded-2xl sm:rounded-3xl bg-white p-3 sm:p-4 shadow-xl sm:shadow-2xl shadow-blue-500/20 border border-gray-200">
-                {/* Badge de Destaque - Mobile */}
-                <div className="absolute top-3 right-3 sm:top-6 sm:right-6 bg-gradient-to-r from-green-600 to-green-700 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold z-10 shadow-md sm:shadow-lg">
-                  CASE REAL • 2024
-                </div>
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl sm:shadow-2xl shadow-blue-500/20 border border-gray-200 bg-white">
 
-                {/* Conteúdo do Card - Mobile Optimized */}
-                <div className="bg-gradient-to-br from-blue-50 to-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8">
-                  <div className="text-center mb-6 sm:mb-8">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-r from-blue-800 to-blue-900 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg">
-                      <Building className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white" />
-                    </div>
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-1 sm:mb-2 leading-tight">
-                      CANAÃ Executivo EXECUTIVO
-                    </h3>
-                    <p className="text-sm sm:text-base text-gray-700 mb-2">Aeródromo 1600m • PAPI Instalado</p>
-                    <div className="inline-flex items-center gap-1.5 bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full text-xs sm:text-sm">
-                      <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
-                      <span className="font-medium">Teresina, PI • SD7E</span>
+                {/* Container da Imagem com altura controlada */}
+                <div className="relative w-full h-[260px] sm:h-[340px] md:h-[420px] lg:h-[520px] xl:h-[560px]">
+
+                  {/* Imagem */}
+                  <Image
+                    src="/hero-image.jpeg"
+                    alt="Aeródromo regularizado pela RAD Consultoria - Pista com sistema PAPI instalado"
+                    fill
+                    priority
+                    quality={90}
+                    sizes="(max-width: 640px) 100vw,
+               (max-width: 1024px) 60vw,
+               50vw"
+                    className="object-cover"
+                  />
+
+                  {/* Overlay sutil para contraste */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/5 to-transparent" />
+
+                  {/* Badge de Localização */}
+                  <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg sm:rounded-xl p-2 sm:p-3 shadow-lg max-w-[85%] sm:max-w-xs border border-gray-200/50">
+                    <div className="flex items-center gap-2">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-sm sm:text-base font-bold text-gray-900">
+                            Fly Village
+                          </h3>
+                          <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-800 px-2 py-1 rounded text-xs font-medium">
+                            SSPF
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Stats Grid - Mobile Optimized */}
-                  <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
-                    <div className="text-center">
-                      <div className="text-2xl sm:text-3xl font-bold text-gray-900">60</div>
-                      <div className="text-xs sm:text-sm text-gray-600 leading-tight">dias para registro</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl sm:text-3xl font-bold text-gray-900">100%</div>
-                      <div className="text-xs sm:text-sm text-gray-600 leading-tight">conformidade ANAC</div>
+                  {/* Indicador de Projeto Real */}
+                  <div className="absolute top-4 right-4">
+                    <div className="bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg backdrop-blur-sm bg-white/10 border border-white/20">
+                      <div className="flex items-center gap-2">
+                        <Award className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span>PROJETO REAL</span>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Lista de Benefícios - Mobile */}
-                  <div className="space-y-2.5 sm:space-y-3">
-                    <div className="flex items-start gap-2.5 sm:gap-3">
-                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm sm:text-base text-gray-700">Registro ANAC completo</span>
-                    </div>
-                    <div className="flex items-start gap-2.5 sm:gap-3">
-                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm sm:text-base text-gray-700">Sistema PAPI certificado</span>
-                    </div>
-                    <div className="flex items-start gap-2.5 sm:gap-3">
-                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm sm:text-base text-gray-700">Operação para aeronaves executivas</span>
-                    </div>
-                  </div>
                 </div>
               </div>
             </motion.div>
@@ -923,7 +1031,8 @@ export default function RADLandingPage() {
       </section>
 
       {/* Cases Reais */}
-      <section id="cases" className="py-12 sm:py-16 md:py-20 bg-white">
+      {/* Galeria Simples de Projetos */}
+      <section id="cases" className="py-12 sm:py-16 md:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-5 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -932,63 +1041,45 @@ export default function RADLandingPage() {
             className="text-center max-w-3xl mx-auto mb-10 sm:mb-16"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              Cases Reais de Sucesso
+              Galeria de Projetos
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 px-2 sm:px-0">
-              Projetos entregues com excelência em todo território nacional
+              Conheça alguns dos aeródromos e helipontos que já homologamos
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
-            {caseStudies.map((caseItem, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {galleryImages.map((image, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`bg-gradient-to-br ${caseItem.highlight ? 'from-blue-50 to-white' : 'from-gray-50 to-white'} rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border ${caseItem.highlight ? 'border-blue-200' : 'border-gray-200'} shadow-md hover:shadow-lg transition-all`}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="group relative rounded-xl sm:rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 sm:mb-6 gap-3">
-                  <div className="flex-1">
-                    <div className="inline-block bg-gradient-to-r from-blue-100 to-blue-50 text-blue-800 px-2.5 py-1 rounded-full text-xs sm:text-sm font-medium mb-2 sm:mb-3">
-                      {caseItem.category}
-                    </div>
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-1 sm:mb-2 leading-tight">
-                      {caseItem.title}
-                    </h3>
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <MapPin size={14} className="sm:w-4 sm:h-4" />
-                      <span className="text-sm sm:text-base">{caseItem.location}</span>
-                    </div>
-                  </div>
-                  {caseItem.code && (
-                    <div className="bg-gray-100 text-gray-800 px-2.5 py-1 rounded text-xs sm:text-sm font-mono self-start sm:self-center">
-                      {caseItem.code}
-                    </div>
-                  )}
+                {/* Container da Imagem */}
+                <div className="relative aspect-[4/3] w-full bg-gradient-to-br from-gray-100 to-gray-200">
+
+                  <Image
+                    src={image.url}
+                    alt={`${image.name} - ${image.prefix}`}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                  {/* Overlay sutil no hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
-                <div className="mb-6 sm:mb-8">
-                  <div className="text-sm font-medium text-gray-700 mb-2 sm:mb-3">Escopo:</div>
-                  <ul className="space-y-2 sm:space-y-3">
-                    {caseItem.scope.slice(0, 3).map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 sm:gap-3">
-                        <div className="w-4 h-4 sm:w-5 sm:h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <Check className="w-2 h-2 sm:w-3 sm:h-3 text-green-600" />
-                        </div>
-                        <span className="text-sm text-gray-700">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {/* Badge similar ao Hero */}
+                <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg sm:rounded-xl p-2 sm:p-2 shadow-lg max-w-[85%] border border-gray-200/50">
+                  <div className="flex items-center gap-2">
+                    <div>
 
-                <div className="space-y-4">
-                  <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-green-200">
-                    <div className="flex items-center gap-2 sm:gap-3">
-                      <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
-                      <div>
-                        <div className="text-green-800 font-bold text-base sm:text-lg">{caseItem.result}</div>
-                        <div className="text-green-700 text-xs sm:text-sm">Projeto entregue com sucesso</div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-sm sm:text-base font-bold text-gray-900">
+                          {image.name}
+                        </h3>
                       </div>
                     </div>
                   </div>
@@ -996,6 +1087,22 @@ export default function RADLandingPage() {
               </motion.div>
             ))}
           </div>
+
+          {/* Texto de apoio */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mt-12 sm:mt-16 text-center"
+          >
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+              Cada projeto com nossa assinatura garante conformidade total com ANAC e DECEA.
+            </p>
+            <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">
+              <CheckCircle className="w-4 h-4" />
+              <span>90+ projetos homologados com sucesso</span>
+            </div>
+          </motion.div>
         </div>
       </section>
 

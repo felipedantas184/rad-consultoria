@@ -576,7 +576,7 @@ export default function RADLandingPage() {
                   </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold mb-1">Eng. Ricardo Augusto Dantas</div>
+                  <div className="text-2xl font-bold mb-1">Ricardo Augusto Dantas</div>
                   <div className="text-blue-200 mb-4">Engenheiro Aeronáutico Sênior</div>
                   <div className="flex items-center gap-4 flex-wrap">
                     <span className="bg-white/10 px-3 py-1 rounded-full text-sm">CREA-SP 123456</span>
