@@ -1200,10 +1200,10 @@ export default function RADLandingPage() {
                           aria-label="Selecione o tipo de projeto"
                         >
                           <option value="">Selecione o tipo de projeto...</option>
-                          <option value="aerodromo">Aeródromo / Pista</option>
-                          <option value="heliponto">Heliponto</option>
-                          <option value="papi">Sistema PAPI</option>
-                          <option value="sinalizacao">Sinalização Horizontal</option>
+                          <option value="Aerodromo">Aeródromo / Pista</option>
+                          <option value="Heliponto">Heliponto</option>
+                          <option value="Papi">Sistema PAPI</option>
+                          <option value="Sinalizacao">Sinalização Horizontal</option>
                         </select>
                       </div>
                     </div>
