@@ -1,5 +1,7 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 // Inter é mais profissional que Geist para negócios B2B
@@ -9,6 +11,9 @@ const inter = Inter({
   variable: "--font-inter",
   weight: ["300", "400", "500", "600", "700", "800"],
 });
+
+// ⚠️ SUBSTITUA ESTE VALOR PELO SEU ID REAL DO GA4 ⚠️
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 export const metadata: Metadata = {
   title: "RAD Consultoria Aeronáutica | Registro de Aeródromos e Helipontos ANAC",
@@ -62,6 +67,31 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="scroll-smooth overflow-x-hidden">
       <head>
+        {/* Google Analytics Script */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            
+            // Configuração principal
+            gtag('config', '${GA_MEASUREMENT_ID}', {
+              page_path: window.location.pathname,
+              debug_mode: ${process.env.NODE_ENV === 'development' ? 'true' : 'false'}
+            });
+            
+            // Função global para tracking de eventos
+            window.trackGAEvent = function(eventName, eventParams = {}) {
+              gtag('event', eventName, eventParams);
+            }
+          `}
+        </Script>
+
+        {/* Meta Tags Básicas */}
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -73,7 +103,7 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans antialiased bg-white text-gray-900 overflow-x-hidden`}>
         {children}
 
-        {/* Schema Markup para SEO (opcional) */}
+        {/* Schema Markup para SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -84,7 +114,7 @@ export default function RootLayout({
               "description": "Especialistas em registro de aeródromos, helipontos e sistemas PAPI",
               "url": "https://rad-aero.com.br/",
               "telephone": "+55-86-99981-1672",
-              "email": "ricardo@tecdata.com.br",
+              "email": "rad.aeronautica@gmail.com",
               "address": {
                 "@type": "PostalAddress",
                 "addressCountry": "BR"

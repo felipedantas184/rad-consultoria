@@ -35,6 +35,7 @@ import {
 import { useState } from 'react'
 import Image from 'next/image'
 import { sendContactForm } from '@/lib/api'
+import { AnalyticsEvents } from '@/lib/analytics'
 
 // ========== DADOS REAIS DA RAD ==========
 
@@ -322,8 +323,8 @@ export default function RADLandingPage() {
   const handleQuickSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    console.log("📤 Iniciando envio do formulário...");
-    console.log("📝 Dados do formulário:", formData);
+    // Rastrear envio do formulário
+    AnalyticsEvents.contactFormSubmit(formData.projectType, formData.location);
 
     // Preparar dados para envio
     const leadData = {
@@ -1322,6 +1323,7 @@ export default function RADLandingPage() {
                 <div className="space-y-4 sm:space-y-6">
                   <a
                     href="https://wa.me/5586999811672"
+                    onClick={() => AnalyticsEvents.whatsappClick('hero_section')}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-green-50 hover:bg-green-100 rounded-lg sm:rounded-xl border border-green-200 transition-colors group"
@@ -1337,6 +1339,8 @@ export default function RADLandingPage() {
 
                   <a
                     href="tel:+5586999811672"
+                    onClick={() => AnalyticsEvents.phoneCallClick('+5586999811672')}
+
                     className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-blue-50 hover:bg-blue-100 rounded-lg sm:rounded-xl border border-blue-200 transition-colors group"
                   >
                     <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
@@ -1465,7 +1469,8 @@ export default function RADLandingPage() {
               <h3 className="font-bold text-lg mb-6">Contato</h3>
               <ul className="space-y-4 text-gray-400">
                 <li>
-                  <a href="tel:+5586999811672" className="flex items-center gap-3 hover:text-white transition-colors">
+                  <a href="tel:+5586999811672" onClick={() => AnalyticsEvents.phoneCallClick('+5586999811672')}
+                    className="flex items-center gap-3 hover:text-white transition-colors">
                     <Phone size={18} />
                     <span>(86) 99981-1672</span>
                   </a>
@@ -1518,6 +1523,7 @@ export default function RADLandingPage() {
       {/* WhatsApp Flutuante - Tamanho Otimizado */}
       <motion.a
         href="https://wa.me/5586999811672"
+        onClick={() => AnalyticsEvents.whatsappClick('hero_section')}
         target="_blank"
         rel="noopener noreferrer"
         initial={{ scale: 0, opacity: 0 }}
