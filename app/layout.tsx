@@ -40,9 +40,9 @@ export const metadata: Metadata = {
     siteName: "RAD Consultoria Aeronáutica",
     images: [
       {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
+        url: "/rad.png",
+        width: 500,
+        height: 500,
         alt: "RAD Consultoria Aeronáutica",
       },
     ],
