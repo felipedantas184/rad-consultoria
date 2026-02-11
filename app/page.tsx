@@ -1531,7 +1531,7 @@ export default function RADLandingPage() {
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
             <div className="flex flex-col md:flex-row justify-between items-center gap-6">
               <div>
-                <p>&copy; 2025 RAD Consultoria Aeronáutica. Todos os direitos reservados.</p>
+                <p>&copy; 2026 RAD Consultoria Aeronáutica. Todos os direitos reservados.</p>
               </div>
               <div className="flex items-center gap-6 text-sm">
                 <a href="#" className="hover:text-white transition-colors">Política de Privacidade</a>
