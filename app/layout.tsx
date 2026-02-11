@@ -100,6 +100,21 @@ export default function RootLayout({
         <link rel="manifest" href="/icons/site.webmanifest" />
         <meta name="theme-color" content="#1e40af" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://rad-aero.com.br/" />
+        <meta property="og:title" content="RAD - Consultoria Aeronáutica" />
+        <meta property="og:description" content="Regularize seu aeródromo ou heliponto com segurança jurídica. Para Produtores Rurais, Pessoas Físicas, Empresas e Prefeituras que precisam de conformidade total com ANAC e DECEA." />
+        <meta property="og:image" content="https://rad-aero.com.br/rad.png" />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="400" />
+        <meta property="og:site_name" content="RAD - Consultoria Aeronáutica" />
+
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="RAD - Consultoria Aeronáutica" />
+        <meta name="twitter:description" content="Regularize seu aeródromo ou heliponto com segurança jurídica. Para Produtores Rurais, Pessoas Físicas, Empresas e Prefeituras que precisam de conformidade total com ANAC e DECEA." />
+        <meta name="twitter:image" content="https://rad-aero.com.br/rad.png" />
       </head>
       <body className={`${inter.variable} font-sans antialiased bg-white text-gray-900 overflow-x-hidden`}>
         {children}
