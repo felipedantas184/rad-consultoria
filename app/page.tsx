@@ -36,6 +36,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { sendContactForm } from '@/lib/api'
 import { AnalyticsEvents } from '@/lib/analytics'
+import { FaWhatsapp } from 'react-icons/fa6'
 
 // ========== DADOS REAIS DA RAD ==========
 
@@ -571,6 +572,7 @@ export default function RADLandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-5 lg:px-8 relative z-10">
           <div className="flex flex-col gap-16 lg:grid lg:grid-cols-2 lg:gap-12 xl:gap-16 items-center">
             {/* Conteúdo Principal - Mobile First */}
+            {/* Conteúdo Principal - Mobile First */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -596,20 +598,40 @@ export default function RADLandingPage() {
                 precisam de conformidade total com ANAC e DECEA.
               </p>
 
-              {/* CTA Principal - Mobile Optimized */}
+              {/* CTAs - Mobile Optimized */}
               <div className="mt-10 sm:mt-12">
-                <motion.a
-                  href="#contact"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="inline-flex items-center justify-center w-full sm:w-auto bg-gradient-to-r from-blue-700 to-blue-900 text-white px-6 sm:px-12 py-4 sm:py-6 rounded-xl sm:rounded-2xl hover:shadow-xl sm:hover:shadow-2xl transition-all shadow-lg hover:shadow-blue-900/30 font-bold text-base sm:text-lg gap-3 sm:gap-4 cursor-pointer group"
-                >
-                  <Calendar className="w-5 h-5 sm:w-7 sm:h-7" />
-                  <span className="text-center sm:text-left flex-1">
-                    Agendar Consulta Gratuita
-                  </span>
-                  <ArrowRight size={20} className="group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform" />
-                </motion.a>
+                {/* Botões lado a lado no desktop, empilhados no mobile */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  {/* Botão Principal - Agendar Consulta */}
+                  <motion.a
+                    href="#contact"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="inline-flex items-center justify-center w-full sm:w-auto bg-gradient-to-r from-blue-700 to-blue-900 text-white px-6 py-4 rounded-xl sm:rounded-2xl hover:shadow-xl sm:hover:shadow-2xl transition-all shadow-lg hover:shadow-blue-900/30 font-bold text-base sm:text-lg gap-3 sm:gap-4 cursor-pointer group"
+                  >
+                    <Calendar className="w-5 h-5 sm:w-7 sm:h-7" />
+                    <span className="text-center sm:text-left flex-1">
+                      Consultoria Gratuita
+                    </span>
+                    <ArrowRight size={20} className="group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform" />
+                  </motion.a>
+
+                  {/* Botão WhatsApp */}
+                  <motion.a
+                    href="https://wa.me/5586999811672?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20a%20regularização%20de%20aeródromos."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="inline-flex items-center justify-center w-full sm:w-auto bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-4 sm:py-6 rounded-xl sm:rounded-2xl hover:shadow-xl sm:hover:shadow-2xl transition-all shadow-lg hover:shadow-green-900/30 font-bold text-base sm:text-lg gap-3 sm:gap-4 cursor-pointer group border border-green-500"
+                  >
+                    <FaWhatsapp className="w-5 h-5 sm:w-7 sm:h-7" />
+                    <span className="text-center sm:text-left flex-1">
+                      WhatsApp
+                    </span>
+                    <ArrowRight size={20} className="group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform" />
+                  </motion.a>
+                </div>
 
                 {/* Trust Indicators - Stacked on Mobile */}
                 <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
@@ -1130,7 +1152,7 @@ export default function RADLandingPage() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="w-full lg:col-span-3 mb-8 sm:mb-0"
+              className="w-full lg:col-span-3 order-2 lg:order-1"
             >
               <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 lg:p-10 shadow-lg sm:shadow-xl border border-gray-200/80">
                 {/* Cabeçalho do Formulário */}
@@ -1314,7 +1336,7 @@ export default function RADLandingPage() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="w-full lg:col-span-2 space-y-6 sm:space-y-8"
+              className="w-full lg:col-span-2 space-y-6 sm:space-y-8 mb-8 sm:mb-0 order-1 lg:order-2"
             >
               {/* Contato Direto */}
               <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 shadow-lg border border-gray-200">
@@ -1322,14 +1344,14 @@ export default function RADLandingPage() {
 
                 <div className="space-y-4 sm:space-y-6">
                   <a
-                    href="https://wa.me/5586999811672"
+                    href="https://wa.me/5586999811672?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20a%20regularização%20de%20aeródromos."
                     onClick={() => AnalyticsEvents.whatsappClick('hero_section')}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-green-50 hover:bg-green-100 rounded-lg sm:rounded-xl border border-green-200 transition-colors group"
                   >
                     <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
-                      <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                      <FaWhatsapp className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                     <div>
                       <div className="font-bold text-gray-900 text-sm sm:text-base">WhatsApp Direto</div>
@@ -1522,7 +1544,7 @@ export default function RADLandingPage() {
 
       {/* WhatsApp Flutuante - Tamanho Otimizado */}
       <motion.a
-        href="https://wa.me/5586999811672"
+        href="https://wa.me/5586999811672?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20a%20regularização%20de%20aeródromos."
         onClick={() => AnalyticsEvents.whatsappClick('hero_section')}
         target="_blank"
         rel="noopener noreferrer"
@@ -1534,7 +1556,7 @@ export default function RADLandingPage() {
         className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 bg-gradient-to-r from-green-600 to-green-700 text-white p-4 rounded-full shadow-xl hover:shadow-2xl transition-all z-50 group"
       >
         <div className="relative">
-          <MessageCircle size={24} className="sm:w-6 sm:h-6" />
+          <FaWhatsapp size={24} className="sm:w-6 sm:h-6" />
         </div>
         <div className="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 bg-gray-900 text-white px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
           Entrar em Contato
