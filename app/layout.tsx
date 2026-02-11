@@ -17,7 +17,7 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 export const metadata: Metadata = {
   title: "RAD Consultoria Aeronáutica | Registro de Aeródromos e Helipontos ANAC",
-  description: "Especialistas em registro de aeródromos, helipontos e sistemas PAPI. 80+ projetos homologados com 100% aprovação ANAC. Consultoria gratuita.",
+  description: "Especialistas em registro de aeródromos, helipontos e sistemas PAPI. 90+ projetos homologados com 100% aprovação ANAC. Consultoria gratuita.",
   keywords: [
     "registro aeródromo",
     "homologação heliponto",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     url: "https://rad-aero.com.br/",
     title: "RAD Consultoria Aeronáutica | Especialistas em Regularização",
-    description: "80+ projetos homologados com 100% aprovação ANAC",
+    description: "90+ projetos homologados com 100% aprovação ANAC",
     siteName: "RAD Consultoria Aeronáutica",
     images: [
       {

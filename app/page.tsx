@@ -100,7 +100,7 @@ const services = [
     features: ['PBZPA - Plano Básico de Zona de Proteção de Aeródromos', 'Perfil Longitudinal', 'Projeto Executivo', 'Projeto de Balizamento Noturno', 'Projeto de Sinalização Horizontal'],
     time: '~180 dias',
     highlight: true,
-    stats: '80+ projetos registrados'
+    stats: '90+ projetos registrados'
   },
   {
     icon: Helicopter,
@@ -421,7 +421,7 @@ export default function RADLandingPage() {
     <main className="min-h-screen bg-white">
       {/* SEO Meta Tags (adicione no layout.tsx) */}
       <title>RAD Consultoria Aeronáutica | Registro de Aeródromos e Helipontos ANAC</title>
-      <meta name="description" content="Especialistas em registro de aeródromos, helipontos e PAPI. 200+ projetos homologados para agronegócio, construtoras e mineração. Consultoria gratuita." />
+      <meta name="description" content="Especialistas em registro de aeródromos, helipontos e PAPI. 90+ projetos homologados para agronegócio, construtoras e mineração. Consultoria gratuita." />
 
       {/* Header Otimizado com Logo Personalizada */}
       <header className="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 z-50 shadow-sm">
