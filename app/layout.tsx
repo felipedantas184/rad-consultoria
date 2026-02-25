@@ -53,6 +53,9 @@ export const metadata: Metadata = {
     description: "Especialistas em registro de aeródromos e helipontos",
     images: ["/twitter-image.png"],
   },
+  other: {
+    "site_name": "RAD Consultoria Aeronáutica",
+  },
   verification: {
     // Adicione depois: google: "seu-codigo-verificacao",
     // Adicione depois: yandex: "seu-codigo-verificacao",
