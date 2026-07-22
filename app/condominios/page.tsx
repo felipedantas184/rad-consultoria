@@ -436,7 +436,7 @@ export default function CondominiosLandingPage() {
             <img
               src="/gallery/fly-village.jpeg"
               alt="Heliponto condomínio - RAD Consultoria Aeronáutica"
-              className="w-full h-72 md:h-full object-cover"
+              className="w-full h-64 md:h-full object-cover"
             />
             <div className="p-6 sm:p-10 flex flex-col justify-center">
               <span className="inline-block bg-slate-100 text-slate-800 px-2.5 py-1 rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4 w-fit">

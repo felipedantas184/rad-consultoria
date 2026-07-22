@@ -322,12 +322,27 @@ export default function RADLandingPage() {
   })
 
   const handleQuickSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    // Rastrear envio do formulário
-    AnalyticsEvents.contactFormSubmit(formData.projectType, formData.location);
+    // 1. Validação nativa do HTML5 (required, type="email" etc.)
+    const form = e.currentTarget as HTMLFormElement;
+    if (!form.checkValidity()) {
+      form.reportValidity();
 
-    // Preparar dados para envio
+      // Coleta campos inválidos
+      const invalidFields = Array.from(form.querySelectorAll(':invalid')).map(
+        (el) => (el as HTMLInputElement | HTMLSelectElement).name
+      );
+
+      // Dispara erro de validação
+      AnalyticsEvents.formError('validation', invalidFields, undefined, formData.projectType, formData.location);
+      return; // impede o envio
+    }
+
+    // 2. Dispara início do formulário (somente se campos obrigatórios estão preenchidos)
+    AnalyticsEvents.formStart(formData.projectType, formData.location);
+
+    // Prepara dados para envio (evita duplicação de código, usando a versão mais completa)
     const leadData = {
       name: formData.name,
       phone: formData.phone,
@@ -339,38 +354,25 @@ export default function RADLandingPage() {
       message: formData.message || '',
       timestamp: new Date().toISOString(),
       source: 'Landing Page - Formulário Principal'
-    }
+    };
 
     console.log("📨 Dados a serem enviados:", leadData);
 
     // Mostrar loading
-    const submitButton = e.currentTarget.querySelector('button[type="submit"]')
+    const submitButton = form.querySelector('button[type="submit"]');
     if (submitButton) {
-      submitButton.innerHTML = 'Enviando...'
-      submitButton.setAttribute('disabled', 'true')
+      submitButton.innerHTML = 'Enviando...';
+      submitButton.setAttribute('disabled', 'true');
     }
 
     try {
-      // Preparar dados para envio
-      const leadData = {
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
-        projectType: formData.projectType,
-        location: formData.location,
-        company: formData.company || '',
-        urgency: (e.currentTarget as any).urgency?.value || '',
-        message: formData.message || '',
-        timestamp: new Date().toISOString(),
-        source: 'Landing Page - Formulário Principal'
-      }
-
-      // Enviar para a API
-      const response = await sendContactForm(leadData)
+      const response = await sendContactForm(leadData);
 
       if (response.success) {
-        // Sucesso
-        alert('✅ Consulta enviada com sucesso! Você receberá um e-mail de confirmação em instantes. Entraremos em contato em até 24h.')
+        // Sucesso -> conversão principal
+        AnalyticsEvents.generateLead(leadData.projectType, leadData.location);
+
+        alert('✅ Consulta enviada com sucesso! Você receberá um e-mail de confirmação em instantes. Entraremos em contato em até 24h.');
 
         // Reset do formulário
         setFormData({
@@ -381,21 +383,20 @@ export default function RADLandingPage() {
           company: '',
           location: '',
           message: ''
-        })
+        });
 
-        // Reset do campo urgency
-        const urgencySelect = document.getElementById('project-urgency') as HTMLSelectElement
-        if (urgencySelect) urgencySelect.value = ''
+        const urgencySelect = document.getElementById('project-urgency') as HTMLSelectElement;
+        if (urgencySelect) urgencySelect.value = '';
 
-        setFormStep(2)
+        setFormStep(2);
       } else {
-        throw new Error(response.message || 'Erro ao enviar')
+        throw new Error(response.message || 'Erro ao enviar');
       }
-
     } catch (error) {
-      console.error('Erro ao enviar formulário:', error)
-      alert('❌ Ocorreu um erro ao enviar sua consulta. Por favor, tente novamente ou entre em contato diretamente pelo WhatsApp: (86) 99981-1672')
-
+      console.error('Erro ao enviar formulário:', error);
+      // Erro de API
+      AnalyticsEvents.formError('api', [], (error as Error).message, formData.projectType, formData.location);
+      alert('❌ Ocorreu um erro ao enviar sua consulta. Por favor, tente novamente ou entre em contato diretamente pelo WhatsApp: (86) 99981-1672');
     } finally {
       // Restaurar botão
       if (submitButton) {
@@ -405,11 +406,11 @@ export default function RADLandingPage() {
           <span>Solicitar Consulta Gratuita</span>
           <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
         </div>
-      `
-        submitButton.removeAttribute('disabled')
+      `;
+        submitButton.removeAttribute('disabled');
       }
     }
-  }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -550,7 +551,7 @@ export default function RADLandingPage() {
                     <a
                       href="tel:+5586999811672"
                       className="text-xs text-gray-600 hover:text-blue-700 flex items-center gap-1"
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={() => AnalyticsEvents.phoneCallClick('+5586999811672')}
                     >
                       <Phone size={12} />
                       <span>(86) 99981-1672</span>
@@ -1376,6 +1377,7 @@ export default function RADLandingPage() {
 
                   <a
                     href="mailto:rad.aeronautica@gmail.com"
+                    onClick={() => AnalyticsEvents.emailClick('rad.aeronautica@gmail.com')}
                     className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 hover:bg-gray-100 rounded-lg sm:rounded-xl border border-gray-200 transition-colors group"
                   >
                     <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
@@ -1498,7 +1500,7 @@ export default function RADLandingPage() {
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:rad.aeronautica@gmail.com" className="flex items-center gap-3 hover:text-white transition-colors">
+                  <a href="mailto:rad.aeronautica@gmail.com" onClick={() => AnalyticsEvents.emailClick('rad.aeronautica@gmail.com')} className="flex items-center gap-3 hover:text-white transition-colors">
                     <Mail size={18} />
                     <span>rad.aeronautica@gmail.com</span>
                   </a>
@@ -1545,7 +1547,7 @@ export default function RADLandingPage() {
       {/* WhatsApp Flutuante - Tamanho Otimizado */}
       <motion.a
         href="https://wa.me/5586999811672?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20a%20regularização%20de%20aeródromos."
-        onClick={() => AnalyticsEvents.whatsappClick('hero_section')}
+        onClick={() => AnalyticsEvents.whatsappClick('floating_button')}
         target="_blank"
         rel="noopener noreferrer"
         initial={{ scale: 0, opacity: 0 }}
