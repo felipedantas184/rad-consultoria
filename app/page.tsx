@@ -324,25 +324,18 @@ export default function RADLandingPage() {
   const handleQuickSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // 1. Validação nativa do HTML5 (required, type="email" etc.)
     const form = e.currentTarget as HTMLFormElement;
     if (!form.checkValidity()) {
       form.reportValidity();
-
-      // Coleta campos inválidos
       const invalidFields = Array.from(form.querySelectorAll(':invalid')).map(
         (el) => (el as HTMLInputElement | HTMLSelectElement).name
       );
-
-      // Dispara erro de validação
       AnalyticsEvents.formError('validation', invalidFields, undefined, formData.projectType, formData.location);
-      return; // impede o envio
+      return;
     }
 
-    // 2. Dispara início do formulário (somente se campos obrigatórios estão preenchidos)
     AnalyticsEvents.formStart(formData.projectType, formData.location);
 
-    // Prepara dados para envio (evita duplicação de código, usando a versão mais completa)
     const leadData = {
       name: formData.name,
       phone: formData.phone,
@@ -358,7 +351,6 @@ export default function RADLandingPage() {
 
     console.log("📨 Dados a serem enviados:", leadData);
 
-    // Mostrar loading
     const submitButton = form.querySelector('button[type="submit"]');
     if (submitButton) {
       submitButton.innerHTML = 'Enviando...';
@@ -367,10 +359,14 @@ export default function RADLandingPage() {
 
     try {
       const response = await sendContactForm(leadData);
+      console.log('Resposta da API:', response); // log adicional para depuração
 
       if (response.success) {
-        // Sucesso -> conversão principal
-        AnalyticsEvents.generateLead(leadData.projectType, leadData.location);
+        try {
+          AnalyticsEvents.generateLead(leadData.projectType, leadData.location);
+        } catch (trackingError) {
+          console.error('Erro ao rastrear generate_lead:', trackingError);
+        }
 
         alert('✅ Consulta enviada com sucesso! Você receberá um e-mail de confirmação em instantes. Entraremos em contato em até 24h.');
 
